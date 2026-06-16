@@ -89,8 +89,19 @@ Useful paths:
 - Pure stdlib; don't add `websockets`/`aiohttp` deps.
 - End commits with the `Co-Authored-By: Claude ...` trailer; push to `origin`.
 
+## TODO / Ideas
+
+- **Historical stats for all drills.** Save every drill run over time (trends, per-key weak
+  spots, history), not just a single best score. Chordle-side feature, but noted here because the
+  bridge's real per-stroke data is what makes richer history possible.
+
 ## Current state
 
-v0.1.0, repo created + pushed (`ff24283`). Transport verified in isolation (RFC 6455 accept KAT,
-frame round-trip, broadcast, origin rejection). **Not yet installed/enabled in Plover** (Ruiz will
-do that himself) and the `client/plover-bridge.ts` is **not yet wired into Chordle**.
+v0.1.0, repo created + pushed. Transport verified in isolation (RFC 6455 accept KAT, frame
+round-trip, broadcast, origin rejection). Installed + enabled in Plover (listening on 8087), and
+the Chordle client is wired in (Witsilog commit `8be3b5d` - Find-the-key Type mode auto-connects).
+
+**Known limitation:** `ws://127.0.0.1` works from `http://localhost` (dev) in every browser, but
+from the live **https** site it's blocked as mixed content in Firefox/Zen/Safari; only Chromium
+exempts loopback. Cross-browser on https needs `wss://` via a loopback-resolving name with a
+trusted cert (e.g. `bridge.witsilog.com` -> 127.0.0.1 + Let's Encrypt) - not yet built.
